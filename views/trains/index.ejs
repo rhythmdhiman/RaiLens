@@ -1,24 +1,29 @@
 <% layout('layouts/boilerplate')%>
 
-<h1> <i><center>All Trains</center></i></h1>
+<h1> <i><center>All Rides</center></i></h1>
 <div class="mb-3">
-    <a href="/trains/new" class="btn btn-outline-dark">Add Train</a>
+    <a href="/trains/new" class="btn btn-outline-dark">Add Tracks</a>
 </div>
-<% for (let train of trains){%>
-<div class="card mb-3">
-    <div class="row">
-        <div class="col-md-4">
-            <img class="img-fluid mt-3 ml-3" alt="" src="<%=train.images[0].url%>">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title"> <i><%= train.title %>  </i></h5>
-                <p class="card-text">
-                    <small class="text-muted"><%= train.sourcedestination%></small>
-                </p>
-                <a class="btn btn-outline-primary" href="/trains/<%=train._id%>">Details & Reviews</a>
+
+<% for (let train of trains) { %>
+    <div class="card mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <% if (train.images && train.images.length > 0) { %>
+                    <img class="img-fluid mt-3 ml-3" alt="Train Image" src="<%= train.images[0].url %>">
+                <% } else { %>
+                    <img class="img-fluid mt-3 ml-3" alt="No image available" src="https://via.placeholder.com/400x300?text=No+Image">
+                <% } %>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><i><%= train.title %></i></h5>
+                    <p class="card-text">
+                        <small class="text-muted"><%= train.sourcedestination %></small>
+                    </p>
+                    <a class="btn btn-outline-primary" href="/trains/<%= train._id %>">Specs & Reviews</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<% }%>
+<% } %>

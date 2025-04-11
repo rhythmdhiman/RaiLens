@@ -47,7 +47,7 @@
     </div>
     <div class="col-6">
         <% if(currentUser){ %>
-        <h2>Leave a Review</h2>
+        <h2>Write a Review</h2>
         <form action="/trains/<%=train._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
         
             <fieldset class="starability-basic">
@@ -65,7 +65,7 @@
                 <label for="first-rate5" title="Amazing">5 stars</label>
             </fieldset>
             <div class="mb-3">
-                <label class="form-label" for="body">Review Text</label>
+                <label class="form-label" for="body">Feedback</label>
                 <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
                 <div class="valid-feedback">
                     Looks good!

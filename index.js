@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;  // Default port or Render port
 app.use(express.json());  // To parse JSON in requests
 app.use(cors());  // Enable Cross-Origin Resource Sharing (CORS)
 
-// MongoDB connection string
+// MongoDB connection (Add this here to connect to MongoDB before routes)
 mongoose.connect('mongodb://localhost:27017/your-db-name', {
   useNewUrlParser: true,
   useUnifiedTopology: true,

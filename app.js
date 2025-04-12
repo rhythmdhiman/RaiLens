@@ -3,10 +3,8 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
-
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -16,7 +14,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const helmet = require('helmet');
-
 const mongoSanitize = require('express-mongo-sanitize');
 
 const userRoutes = require('./routes/users');
@@ -26,19 +23,6 @@ const reviewRoutes = require('./routes/reviews');
 const MongoDBStore = require("connect-mongo")(session);
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/railDB';
-
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-});
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected");
-});
 
 const app = express();
 
@@ -59,7 +43,7 @@ const store = new MongoDBStore({
     touchAfter: 24 * 60 * 60
 })
 
-store.on("error", function(e) {
+store.on("error", function (e) {
     console.log("SESSION STORE ERROR", e)
 })
 
@@ -79,9 +63,9 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(helmet({ 
+app.use(helmet({
     contentSecurityPolicy: false,
- }));
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -97,14 +81,13 @@ app.use((req, res, next) => {
     next();
 })
 
-
 app.use('/', userRoutes);
 app.use('/trains', trainRoutes)
 app.use('/trains/:id/reviews', reviewRoutes)
+
 app.get('/', (req, res) => {
     res.render('home')
 });
-
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
@@ -116,10 +99,4 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-const port = process.env.PORT || 8000;
-
-//app.listen(port, () => {
-    //console.log(`Serving on port ${port}`)
-//})
 module.exports = app;
- 
